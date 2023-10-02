@@ -1,0 +1,37 @@
+//tankDrive Pseudocode 
+//variables already established
+
+While( receiving signals) 
+{
+
+if( valueR > midPoint && valueL > midpoint)
+{
+  valueR && valueL ++; //move forward 
+}
+
+if(value < midPoint && valueL < midPoint)
+{
+  valueR && valueL --; //move backwards
+}
+
+if(valueL > midpoint) 
+{
+  //move left
+}
+
+ if( valueR > midpoint)
+{
+  // move right
+}
+
+if(killSwitch = true)
+{
+ // stop 
+}
+
+if(button = true) 
+{
+ //activate weapon 
+}
+
+}
