@@ -1,12 +1,13 @@
 /*
-  This utilizes timer register and changes the prescaling on them to alter the output frequencies.
-  Register 0 (TCCR0A and TTCR0B) should not be used. This will change the timing in all other timing function in arduino
-  pin 11 is used for SPI so we may not be able to alter regester 2
+  This utilizes a timer register and changes the prescaling on them to alter the output frequencies.
+  Register 0 (TCCR0A and TTCR0B) should not be used. This will change the timing in all other timing functions in Arduino
+  pin 11 is used for SPI so we may not be able to alter register 2
 
-  Also note that the variable names bellow are directly linked to the timer registers.
+  Also, note that the variable names below are directly linked to the timer registers.
+  analogWrite() may still be used to change the width(duty) of the PWM without reverting to the default frequency.
 
-  I reccomend using register 1 at 122Hz for talon and using pins 9 and 10 at default 980Hz for sabertooth.
-  This recomendation is for Uno ONLY
+  I recommend using register 1 at 122Hz for talon and using pins 9 and 10 at default 980Hz for sabertooth.
+  This recommendation is for Uno ONLY
 */
 void setup() {
 
