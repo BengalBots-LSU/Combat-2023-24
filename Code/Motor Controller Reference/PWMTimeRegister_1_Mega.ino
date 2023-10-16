@@ -1,13 +1,14 @@
 /*
-  This utilizes timer register and changes the prescaling on them to alter the output frequencies.
-  Register 0 (TCCR0A andTTCR0B) should not be used. This will change the timing in all other timing function in arduino
-  pin 11 is used for SPI so we may not be able to alter regester 2
+  This utilizes a timer register and changes the prescaling on them to alter the output frequencies.
+  Register 0 (TCCR0A and TCCR0B) should not be used. This will change the timing in all other timing functions in Arduino
+  pin 11 is used for SPI so we may not be able to alter register 2
 
-  However on Mega there are also regester 3, 4, and 5. We can use these to aviod conflicts with other libraries and spi pin 11
+  However, on Mega there are also registers 3, 4, and 5. We can use these to avoid conflicts with other libraries and spi (pins 50-53)
 
-  Therefore on mega I recomend using registers 4 and 5 for the motor controller
+  Therefore on Mega I recommend using registers 4 and 5 for the motor controller.
+  analogWrite() may still be used to change the width(duty) of the PWM without reverting to the default frequency.
 
-  The frequencies and pins listed below still need to be tested, They are just what I expect
+  This code has been tested and confirmed with an oscilloscope
 */
 
 void setup() {
