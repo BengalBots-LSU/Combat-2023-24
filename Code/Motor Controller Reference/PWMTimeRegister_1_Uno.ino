@@ -12,9 +12,9 @@
 void setup() {
 
 pinMode(3, OUTPUT);
-
+pinMode(11, OUTPUT);
 TCCR2A = _BV(COM2A1) | _BV(COM2B1) | _BV(WGM20);
-TCCR2B = _BV(CS01); //set t0 3.92KHz, can be set to 31.3KHz(CS00)
+TCCR2B = _BV(CS01); //set to 3.92KHz, can be set to 31.3KHz(CS00)
 OCR2A = 128; // x/255 pin 11 duty
 OCR2B = 30; // x/255 pin 3 duty
 
@@ -22,7 +22,7 @@ pinMode(10, OUTPUT);
 pinMode(9, OUTPUT);
 TCCR1A = _BV(COM1A1) | _BV(COM1B1) | _BV(WGM20);
 //TCCR1B = _BV(CS02); //set to 122Hz. can be set to 3.92KHz(CS10) and 31.3KHz(CS00)
-TCCR1B = 4;
+TCCR1B = 4;//can also be set using intergers 0, 1, 2, and 4
 OCR1A = 30; // x/255 pin 9 duty
 OCR1B = 128; // x/255 pin 10 duty
 
