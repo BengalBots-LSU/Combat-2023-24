@@ -6,7 +6,7 @@
   Also, note that the variable names below are directly linked to the timer registers.
   analogWrite() may still be used to change the width(duty) of the PWM without reverting to the default frequency.
 
-  I recommend using register 1 at 122Hz for talon and using pins 9 and 10 at default 980Hz for sabertooth.
+  I recommend using register 1 at 122Hz for talon and using pins 5 and 6 at default 980Hz for sabertooth.
   This recommendation is for Uno ONLY
 */
 void setup() {
