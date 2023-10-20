@@ -1,4 +1,4 @@
-/*
+ /*
 Authors: Caleb Taylor, Maureen Sanchez, BengalBots team
 Purpose: Create an Arduino combat bot to compete in LSU Bengal Brawl against Senior Design teams
 Objective: Acts as the receiver and acts out the commands that the transmitter has sent to it
@@ -12,8 +12,8 @@ Code References:
 
 //Libraries needed to use certain modules and functions to make this program work
 #include < SPI.h >       //used to start communication between Arduinos
-    #include < nRF24L01.h >
-    #include < RF24.h >
+#include < nRF24L01.h >
+#include < RF24.h >
 
 
     //Variables
@@ -28,6 +28,7 @@ Code References:
 const byte address[6] = "00001";
 int leftMotorPin1 = 2, leftMotorPin2 = 3, rightMotorPin1 = 4, rightMotorPin2 = 5, weaponMotor = 6;
 int leftMotorSpeedPin = 7, rightMotorSpeedPin = 8;
+int midPoint = 127; //50% duty to not run at all 
 
 // Max size of this struct is 32 bytes - NRF24L01 buffer limit
 struct Data_Package {
@@ -42,6 +43,8 @@ Data_Package data; //Create a variable with the above structure
 
 
 void setup() {
+
+
     Serial.begin(115200);  // boots serial monitor at ? bps
     radio.begin();
     radio.openReadingPipe(0, address);
@@ -54,6 +57,20 @@ void setup() {
     pinMode(leftMotorSpeedPin, OUTPUT);
     pinMode(rightMotorSpeedPin, OUTPUT);
     pinMode(weaponMotor, OUTPUT);
+    pinMode(6, OUTPUT);
+    pinMode(7, OUTPUT);
+    
+    TCCR4A = _BV(COM2A1) | _BV(COM2B1) | _BV(WGM20);
+    TCCR4B = _BV(CS01); //set to 3.92KHz, can be set to 31.3KHz(CS00)
+    OCR4A = 128; // 128/255 pin 6 duty
+    OCR4B = 30; // 30/255 pin 7 duty
+
+    pinMode(46, OUTPUT);
+    pinMode(45, OUTPUT);
+    TCCR5A = _BV(COM1A1) | _BV(COM1B1) | _BV(WGM20);
+    TCCR5B = _BV(CS02); //set to 122Hz. can be set to 3.92KHz(CS10) and 31.3KHz(CS00)
+    OCR5A = 30; // 30/255 pin 46 duty
+    OCR5B = 128; // 128/255 pin 45 duty
 }
 
 
@@ -105,29 +122,6 @@ void drive(int leftDirection, int rightDirection){
   int leftPWM = map(leftDirection, -255, 255, 0, 255);
   int rightPWM = map(rightDirection, -255, 255, 0, 255);
 
-    if (leftDirection > 0) { //bot moves forward
-        digitalWrite(leftMotorPin1, HIGH);
-        digitalWrite(leftMotorPin2, LOW);
-    } else if (leftDirection < 0) { //bot moves backward 
-        digitalWrite(leftMotorPin1, LOW);
-        digitalWrite(leftMotorPin2, HIGH);
-    } else { //stops left motor
-        digitalWrite(leftMotorPin1, LOW);
-        digitalWrite(leftMotorPin2, LOW);
-    }
-
-    if (rightDirection > 0) { //bot moves right  
-        digitalWrite(rightMotorPin1, LOW);
-        digitalWrite(rightMotorPin2, HIGH);
-    } else if (rightDirection < 0) { //bot moves left
-        digitalWrite(rightMotorPin1, HIGH);
-        digitalWrite(rightMotorPin2, LOW);
-    } else { //stops right motor 
-        digitalWrite(rightMotorPin1, LOW);
-        digitalWrite(rightMotorPin2, LOW);
-    }
     //Controls motor speed using PWM
     analogWrite(leftMotorSpeedPin, abs(leftPWM));
     analogWrite(rightMotorSpeedPin, abs(rightPWM));
-
-}
