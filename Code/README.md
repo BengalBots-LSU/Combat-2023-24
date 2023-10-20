@@ -12,6 +12,6 @@
 - bool killSwitch
 - bool activateWeapon
 ### Button Controls
-- killSwitch -> sends a comman to the bot to stop moving instantly, communication should still be established between driver and bot
+- killSwitch -> sends a command to the bot to stop moving instantly, communication should still be established between driver and bot
 - activateWeapon -> sends a command for the bot to move the weapon
   -  Note: need to know final decision on weapon movement so we can program it to be continuously moving or just one movement
