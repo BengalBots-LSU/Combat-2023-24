@@ -8,7 +8,7 @@ RF24 radio(7, 8); // CE, CSN
 
 //Constant variables
 const byte address[6] = "00001";
-int leftMotorPin1 = 2, leftMotorPin2 = 3, rightMotorPin1 = 4, rightMotorPin2 = 5, weaponMotor = 6;
+int leftMotorPin = 2, rightMotorPin = 4, weaponMotor = 6;
 //int leftJoystick = 513, rightJoystickA = 502, rightJoystickB = 503;
 Servo LM1, LM2, RM1, RM2;
 //change
@@ -36,10 +36,8 @@ void setup() {
   radio.startListening();
 
   //sabertooth setup
-  LM1.attach(leftMotorPin1, 1000, 2000);
-  LM2.attach(leftMotorPin2, 1000, 2000);
-  RM1.attach(rightMotorPin1, 1000, 2000);
-  RM2.attach(rightMotorPin2, 1000, 2000);
+  LM1.attach(leftMotorPin, 1000, 2000);
+  RM1.attach(rightMotorPin, 1000, 2000);
 
 }
 
@@ -66,9 +64,7 @@ void loop() {
 
   //give power to the motors from 0 (reverse) to 180 (forward)
   RM1.write(right);
-  RM2.write(right);
   LM1.write(left);
-  LM2.write(left);
   //in ms
   delay(20);
 
