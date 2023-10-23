@@ -25,3 +25,4 @@
 
 ### Notes for motor controller
 - We'll be using servo libraries
+- When the bot turns on make sure the motorcontroller is set to the midpoint value to "calibrate"
