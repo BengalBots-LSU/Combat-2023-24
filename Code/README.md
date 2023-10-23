@@ -17,8 +17,11 @@
   -  Note: need to know final decision on weapon movement so we can program it to be continuously moving or just one movement
 
 ### Modules that are being used on the Arduino Mega 
-
-
+- nRF24L01 -> bluetooth module
+- joysticks x 2 -> controllers
+- motor controllers: 
+  - Sabertooth -> drive train
+  - Talon SRX -> weapon controller
 
 ### Notes for motor controller
 - We'll be using servo libraries
