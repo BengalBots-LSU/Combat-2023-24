@@ -10,7 +10,7 @@ RF24 radio(7, 8); // CE, CSN
 const byte address[6] = "00001";
 int leftMotorPin = 2, rightMotorPin = 4, weaponMotor = 6;
 //int leftJoystick = 513, rightJoystickA = 502, rightJoystickB = 503;
-Servo LM1, LM2, RM1, RM2;
+Servo LM1, RM1;
 //change
 int buttonMax = 1023;
 //see DIP switch wizard to configure the pins to the servos
