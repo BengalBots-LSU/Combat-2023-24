@@ -24,5 +24,6 @@
   - Talon SRX -> weapon controller
 
 ### Notes for motor controller
+- It has been decided that we're only working with two motors for drive
 - We'll be using servo libraries
 - When the bot turns on make sure the motorcontroller is set to the midpoint value to "calibrate"
