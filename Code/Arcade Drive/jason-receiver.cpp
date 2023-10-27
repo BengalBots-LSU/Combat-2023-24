@@ -14,7 +14,7 @@ Code References:
 #include < SPI.h >       //used to start communication between Arduinos
 #include < nRF24L01.h >
 #include < RF24.h >
-
+#include <Servo.h>
 
     //Variables
     RF24 radio(7, 8); // CE, CSN
@@ -26,9 +26,9 @@ Code References:
 
 //Constant variables
 const byte address[6] = "00001";
-int leftMotorPin1 = 2, leftMotorPin2 = 3, rightMotorPin1 = 4, rightMotorPin2 = 5, weaponMotor = 6;
-int leftMotorSpeedPin = 7, rightMotorSpeedPin = 8;
-int midPoint = 127; //50% duty to not run at all 
+int leftMotorPin1 = 2, rightMotorPin1 = 4, weaponMotor = 6;
+Servo LM1, RM1;
+int buttonMax = 1023;
 
 // Max size of this struct is 32 bytes - NRF24L01 buffer limit
 struct Data_Package {
@@ -62,8 +62,8 @@ void setup() {
     
     TCCR4A = _BV(COM2A1) | _BV(COM2B1) | _BV(WGM20);
     TCCR4B = _BV(CS01); //set to 3.92KHz, can be set to 31.3KHz(CS00)
-    OCR4A = 128; // 128/255 pin 6 duty
-    OCR4B = 30; // 30/255 pin 7 duty
+    OCR4A = 128; // 128/255 pin 6 duty for sabertooth
+    OCR4B = 30; // 30/255 pin 7 duty for sabertooth
 
     pinMode(46, OUTPUT);
     pinMode(45, OUTPUT);
@@ -71,6 +71,11 @@ void setup() {
     TCCR5B = _BV(CS02); //set to 122Hz. can be set to 3.92KHz(CS10) and 31.3KHz(CS00)
     OCR5A = 30; // 30/255 pin 46 duty
     OCR5B = 128; // 128/255 pin 45 duty
+
+   LM1.attach(leftMotorPin, 1000, 2000);
+   RM1.attach(rightMotorPin, 1000, 2000);
+
+
 }
 
 
@@ -97,9 +102,13 @@ void loop() {
 //ensure motor speeds are within range of (-255,255)
   leftMotorSpeed = constrain(leftMotorSpeed, -255, 255);
   rightMotorSpeed = constrain(rightMotorSpeed, -255, 255);
+  int horizontal = map(rightMotorSpeed,0,buttonMax,0,180);
+  int vertical = map(leftMotorSpeed,0,buttonMax,180,0);
 
-  drive(leftMotorSpeed, rightMotorSpeed);
+  RM1.write(horizontal);
+  LM1.write(vertical);
 
+  delay(20);
 
 
 
@@ -117,11 +126,3 @@ void loop() {
     }
 }
 
-void drive(int leftDirection, int rightDirection){
-// maps motor direction values to PWM range(0-255) 
-  int leftPWM = map(leftDirection, -255, 255, 0, 255);
-  int rightPWM = map(rightDirection, -255, 255, 0, 255);
-
-    //Controls motor speed using PWM
-    analogWrite(leftMotorSpeedPin, abs(leftPWM));
-    analogWrite(rightMotorSpeedPin, abs(rightPWM));
