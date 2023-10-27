@@ -50,27 +50,8 @@ void setup() {
     radio.openReadingPipe(0, address);
     radio.setPALevel(RF24_PA_MIN);
     radio.startListening();
-    pinMode(leftMotorPin1, OUTPUT);
-    pinMode(leftMotorPin2, OUTPUT);
-    pinMode(rightMotorPin1, OUTPUT);
-    pinMode(rightMotorPin2, OUTPUT);
-    pinMode(leftMotorSpeedPin, OUTPUT);
-    pinMode(rightMotorSpeedPin, OUTPUT);
-    pinMode(weaponMotor, OUTPUT);
-    pinMode(6, OUTPUT);
-    pinMode(7, OUTPUT);
     
-    TCCR4A = _BV(COM2A1) | _BV(COM2B1) | _BV(WGM20);
-    TCCR4B = _BV(CS01); //set to 3.92KHz, can be set to 31.3KHz(CS00)
-    OCR4A = 128; // 128/255 pin 6 duty for sabertooth
-    OCR4B = 30; // 30/255 pin 7 duty for sabertooth
-
-    pinMode(46, OUTPUT);
-    pinMode(45, OUTPUT);
-    TCCR5A = _BV(COM1A1) | _BV(COM1B1) | _BV(WGM20);
-    TCCR5B = _BV(CS02); //set to 122Hz. can be set to 3.92KHz(CS10) and 31.3KHz(CS00)
-    OCR5A = 30; // 30/255 pin 46 duty
-    OCR5B = 128; // 128/255 pin 45 duty
+    
 
    LM1.attach(leftMotorPin, 1000, 2000);
    RM1.attach(rightMotorPin, 1000, 2000);
