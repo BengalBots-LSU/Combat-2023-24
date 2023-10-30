@@ -17,7 +17,7 @@
   -  Note: need to know final decision on weapon movement so we can program it to be continuously moving or just one movement
 
 ### Modules that are being used on the Arduino Mega 
-- nRF24L01 -> bluetooth module
+- <a href="https://howtomechatronics.com/tutorials/arduino/arduino-wireless-communication-nrf24l01-tutorial/">nRF24L01</a> -> bluetooth module
 - joysticks x 2 -> controllers
 - motor controllers: 
   - Sabertooth -> drive train
