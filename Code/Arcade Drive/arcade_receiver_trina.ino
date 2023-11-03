@@ -64,9 +64,9 @@ void loop() {
   
   //turns the joystick values into left and right speeds
   int rightSpeed = 180 - (yAxis + xAxis);
-  rightSpeed = constrain(rightMotorSpeed, 0, 180);
+  rightSpeed = constrain(rightSpeed, 0, 180);
   int leftSpeed = yAxis - xAxis;
-  leftSpeed = constrain(leftMotorSpeed, 0 , 180);
+  leftSpeed = constrain(leftSpeed, 0 , 180);
 
   //give power to the motors from 0 (reverse) to 180 (forward)
   RM1.write(rightSpeed);
