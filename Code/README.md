@@ -18,23 +18,31 @@
 - activateWeapon -> sends a command for the bot to move the weapon
   -  Note: need to know final decision on weapon movement so we can program it to be continuously moving or just one movement
 
-### Modules that are being used on the Arduino Nano Every 
+### Modules that are being used on the Nano Every (Transmitter/Controller)
 - <a href="https://howtomechatronics.com/tutorials/arduino/arduino-wireless-communication-nrf24l01-tutorial/">nRF24L01</a> -> bluetooth module
 - <a href="https://arduinogetstarted.com/tutorials/arduino-joystick">joysticks</a> x 2 -> controllers
 - motor controllers: 
   - Sabertooth -> drive train
   - Talon SRX -> weapon controller
 
-### Pin on Nano Every
+### Pins on Nano Every (Transmitter/Controller)
 - Joysticks: (left, right)
   - Directions: A1, A2
   - Power & Ground: breadboard
   - Switches: D2, D3
 - NRF:
   -    D10, D11, D12, D13
+  -    Powe & Ground: ??
 - LED: 5 -> green, 6 -> yellow, red ->
+
+### Pins on Mega (Receiver/Robot)
+- NRF:
+  -    D10, D11, D12, D13
+  -    Powe & Ground: ??
+- Motor Controller:
+  -    
   
-### Notes for motor controller
+### Notes for motor controller 
 - It has been decided that we're only working with two motors for drive
 - We'll be using servo libraries
 - When the bot turns on make sure the motorcontroller is set to the midpoint value to "calibrate"
