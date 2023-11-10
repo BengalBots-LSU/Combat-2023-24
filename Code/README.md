@@ -26,10 +26,14 @@
   - Talon SRX -> weapon controller
 
 ### Pin on Nano Every
-- Joysticks:
+- Joysticks: (left, right)
   - Directions: A1, A2
-  - Power & Ground: bread
-- LED: 5 -> green, 6 -> yellow, red -> 
+  - Power & Ground: breadboard
+  - Switches: D2, D3
+ - NRF:
+  - 
+- LED: 5 -> green, 6 -> yellow, red ->
+- 
 ### Notes for motor controller
 - It has been decided that we're only working with two motors for drive
 - We'll be using servo libraries
