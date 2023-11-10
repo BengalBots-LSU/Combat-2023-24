@@ -30,10 +30,10 @@
   - Directions: A1, A2
   - Power & Ground: breadboard
   - Switches: D2, D3
- - NRF:
-  - 
+- NRF:
+  -    D10, D11, D12, D13
 - LED: 5 -> green, 6 -> yellow, red ->
-- 
+  
 ### Notes for motor controller
 - It has been decided that we're only working with two motors for drive
 - We'll be using servo libraries
