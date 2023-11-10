@@ -32,13 +32,13 @@
   - Switches: D2, D3
 - NRF:
   -    D10, D11, D12, D13
-  -    Powe & Ground: ??
+  -    Power & Ground: ??
 - LED: 5 -> green, 6 -> yellow, red ->
 
 ### Pins on Mega (Receiver/Robot)
 - NRF:
   -    D10, D11, D12, D13
-  -    Powe & Ground: ??
+  -    Power & Ground: ??
 - Motor Controller:
   -    
   
