@@ -51,10 +51,9 @@ void setup() {
 void loop() {
   jDirectionL = analogRead(joystickL);  //reads the command given from the left joystick
   jDirectionR = analogRead(joystickR);  //reads the command given from the right joystick
-  //weaponButton(activateWeapon);           //reads the command from pressing the button
-  //killButton(activateKill);
-  killButton = digitalRead(killPin);
-  weaponButton = digitalRead(weaponPin);
+
+  killButton = digitalRead(killPin); //reads the command from pressing the button
+  weaponButton = digitalRead(weaponPin); //reads the command from pressing the button
 
   struct Data_Package{ //sets the package 
     int leftJoystick = jDirectionL;  //reads the command given from the left joystick
