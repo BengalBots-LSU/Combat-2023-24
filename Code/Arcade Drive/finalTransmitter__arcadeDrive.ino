@@ -64,13 +64,13 @@ void loop() {
 
   Data_Package data; // Create a variable with the above structure
   radio.write(&data, sizeof(Data_Package));
-  Serial.print("a: ");
+  Serial.print("left_Joystick: "); //Changing data testing output
   Serial.print(data.leftJoystick);
-  Serial.print(" b: ");
+  Serial.print("right_Jotstick: "); //Changing data testing output
   Serial.print(data.rightJoystick);
-  Serial.print(" c: ");
+  Serial.print("kill_Button: ");  //Changing data testing output
   Serial.print(data.activateKill);
-  Serial.print(" d: ");
+  Serial.print("weapon_Button: ");//Changing data testing output
   Serial.println(data.activateWeapon);
   Serial.println(" ");
 }
