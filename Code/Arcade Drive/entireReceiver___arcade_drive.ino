@@ -24,9 +24,9 @@ NRF24 Pins:
 
 //Constant variables 
 const byte address[6] = "00001";
-int leftMotorPin1 = 2; //saber motor controller
-int leftMotorPin2 = 3; //saber motor controller
-int rightMotorPin1 = 4; //talon motor controller
+int leftMotor = 2; //saber motor controller
+int RightMotor = 3; //saber motor controller
+int weaponMotor = 4; //talon motor controller
 int kSwitch = 9; //kill switch 
 
 // Max size of this struct is 32 bytes - NRF24L01 buffer limit
@@ -45,11 +45,10 @@ void setup() {
   radio.openReadingPipe(0, address);
   radio.setPALevel(RF24_PA_MIN);
   radio.startListening();
-  pinMode(leftMotorPin1, OUTPUT);
-  pinMode(leftMotorPin2, OUTPUT);
-  pinMode(rightMotorPin1, OUTPUT);
-  pinMode(rightMotorPin2, OUTPUT);
+  pinMode(leftMotor, OUTPUT);
+  pinMode(RightMotor, OUTPUT);
   pinMode(weaponMotor, OUTPUT);
+  pinMode(kSwitch, OUTPUT);
 }
 
 void loop() {
