@@ -25,9 +25,12 @@ NRF24 Pins:
 //Constant variables 
 const byte address[6] = "00001";
 int leftMotor = 2; //saber motor controller
-int RightMotor = 3; //saber motor controller
+int rightMotor = 3; //saber motor controller
 int weaponMotor = 4; //talon motor controller
 int kSwitch = 9; //kill switch 
+
+//Changing Variables
+int leftJoystick = 0, rightJoystick = 0;
 
 // Max size of this struct is 32 bytes - NRF24L01 buffer limit
 struct Data_Package {
@@ -39,6 +42,25 @@ struct Data_Package {
 
 Data_Package data; //Create a variable with the above structure
 
+void moveBot(int left, int right){
+  if(left > leftJoystick && right > 502) { //tells the bot to move forward
+    digitalWrite(leftMotor, HIGH); //left motor moves forward
+    digitalWrite(rightMotor, HIGH);//right motor moves forward
+  } else if (left < leftJoystick && right < 502){ //tells the bot to move backward
+    digitalWrite(leftMotor, LOW);  //left motor moves backward
+    digitalWrite(rightMotor, LOW); //right motor moves backward
+  } else if (left > leftJoystick && right == 502){ //tells the bot to turn right
+    digitalWrite(leftMotor, HIGH); //left motor moves forward
+    digitalWrite(rightMotor, LOW); //right motor moves backward
+  } else if (left == leftJoystick && right > 502){ //tells the bot to turn left
+    digitalWrite(leftMotor, LOW);  //left motor moves backward
+    digitalWrite(rightMotor, HIGH);//right motor moves forward
+  }else if (left == leftJoystick && (right == 502 || right == 503)) { //tells the bot to nothing/don't move
+    digitalWrite(leftMotor, LOW);
+    digitalWrite(rightMotor, LOW);
+  }  
+}
+
 void setup() {
   Serial.begin(115200);  // boots serial monitor at ? bps
   radio.begin();
@@ -46,7 +68,7 @@ void setup() {
   radio.setPALevel(RF24_PA_MIN);
   radio.startListening();
   pinMode(leftMotor, OUTPUT);
-  pinMode(RightMotor, OUTPUT);
+  pinMode(rightMotor, OUTPUT);
   pinMode(weaponMotor, OUTPUT);
   pinMode(kSwitch, OUTPUT);
 }
@@ -64,34 +86,9 @@ void loop() {
       //kill bot and/or turn on bot
     }
 
-    if(data.jDirectionL > leftJoystick && data.jDirectionR > 502) { //tells the bot to move forward
-      digitalWrite(leftMotorPin1, HIGH); //left motor moves forward
-      digitalWrite(leftMotorPin2, LOW);  //left motor moves forward
-      digitalWrite(rightMotorPin1, HIGH);//right motor moves forward
-      digitalWrite(rightMotorPin2, LOW); //right motor moves forward
-    } else if (data.jDirectionL < leftJoystick && data.jDirectionR < 502){ //tells the bot to move backward
-      digitalWrite(leftMotorPin1, LOW);  //left motor moves backward
-      digitalWrite(leftMotorPin2, HIGH); //left motor moves backward
-      digitalWrite(rightMotorPin1, LOW); //right motor moves backward
-      digitalWrite(rightMotorPin2, HIGH);//right motor moves backward
-    } else if (data.jDirectionL > leftJoystick && data.jDirectionR == 502){ //tells the bot to turn right
-      digitalWrite(leftMotorPin1, HIGH); //left motor moves forward
-      digitalWrite(leftMotorPin2, LOW);  //left motor moves forward
-      digitalWrite(rightMotorPin1, LOW); //right motor moves backward
-      digitalWrite(rightMotorPin2, HIGH);//right motor moves backward
-    } else if (data.jDirectionL == leftJoystick && data.jDirectionR > 502){ //tells the bot to turn left
-      digitalWrite(leftMotorPin1, LOW);  //left motor moves backward
-      digitalWrite(leftMotorPin2, HIGH); //left motor moves backward
-      digitalWrite(rightMotorPin1, HIGH);//right motor moves forward
-      digitalWrite(rightMotorPin2, LOW); //right motor moves forward
-    }
-    else if (data.jDirectionL == leftJoystick && (data.jDirectionR == 502 || data.jDirectionR == 503)) { //tells the bot to nothing/don't move
-      digitalWrite(leftMotorPin1, LOW);
-      digitalWrite(leftMotorPin2, LOW);
-      digitalWrite(rightMotorPin1, LOW);
-      digitalWrite(rightMotorPin2, LOW);
-    }
+    moveBot(data.jDirectionL, data.jDirectionR);
  }
+
   /* testing to make sure the values are being collected accurately 
   Serial.print("a: ");
   Serial.print(data.jDirectionL);
