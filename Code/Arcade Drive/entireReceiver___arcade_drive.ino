@@ -1,13 +1,3 @@
-/*
-Authors: Maureen Sanchez, BengalBots team
-Purpose: Create an Arduino combat bot to compete in LSU Bengal Brawl against Senior Design teams
-Objective: Acts as the receiver and acts out the commands that the transmitter has sent to it 
-
-Code References:
-- Moving components https://github.com/maureensanchez99/Arroyo-Seco-Duck-Race-2022
-- Parsing through data https://github.com/maureensanchez99/CaSGC-Internship-2022
-*/
-
 //Libraries needed to use certain modules and functions to make this program work
 #include <SPI.h>       //used to start communication between Arduinos
 #include <nRF24L01.h>
@@ -24,10 +14,11 @@ NRF24 Pins:
 
 //Constant variables 
 const byte address[6] = "00001";
-int leftMotor = 2; //saber motor controller
-int rightMotor = 3; //saber motor controller
-int weaponMotor = 4; //talon motor controller
-int kSwitch = 9; //kill switch 
+const int leftMotor = 2; //saber motor controller
+const int rightMotor = 3; //saber motor controller
+const int weaponMotor = 4; //talon motor controller
+const int kSwitch = 9; //kill switch 
+const int greenLED = 5;
 
 //Changing Variables
 int leftJoystick = 0, rightJoystick = 0;
@@ -71,11 +62,13 @@ void setup() {
   pinMode(rightMotor, OUTPUT);
   pinMode(weaponMotor, OUTPUT);
   pinMode(kSwitch, OUTPUT);
+  pinMode(greenLED, OUTPUT);
 }
 
 void loop() {
  while(radio.available()) {
     radio.read(&data, sizeof(Data_Package)); // Read the whole data and store it into the 'data' structure
+    pinMode(greenLED, HIGH);
 
     if(data.weaponButton == false && data.killButton == true){ //checks if the weapon needs to be activated 
       digitalWrite(weaponMotor, HIGH); //activate weapon
