@@ -1,3 +1,13 @@
+/*
+Authors: Maureen Sanchez, BengalBots team
+Purpose: Create an Arduino combat bot to compete in LSU Bengal Brawl against Senior Design teams
+Objective: Acts as the receiver and acts out the commands that the transmitter has sent to it 
+
+Code References:
+- Moving components https://github.com/maureensanchez99/Arroyo-Seco-Duck-Race-2022
+- Parsing through data https://github.com/maureensanchez99/CaSGC-Internship-2022
+*/
+
 //Libraries needed to use certain modules and functions to make this program work
 #include <SPI.h>       //used to start communication between Arduinos
 #include <nRF24L01.h>
@@ -5,12 +15,8 @@
 
 //Variables
 RF24 radio(7, 8); // CE, CSN
-/*
-NRF24 Pins: 
-
-*/
 //LED pins: green - 5, yellow - 6, 
-//is it connected to transmitter, one is hardwired, one is TBD
+//if it is connected to transmitter, one is hardwired, one is TBD
 
 //Constant variables 
 const byte address[6] = "00001";
@@ -66,7 +72,8 @@ void setup() {
 }
 
 void loop() {
- while(radio.available()) {
+  pinMode(greenLED, LOW);
+  while(radio.available()) {
     radio.read(&data, sizeof(Data_Package)); // Read the whole data and store it into the 'data' structure
     pinMode(greenLED, HIGH);
 
