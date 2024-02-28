@@ -51,10 +51,13 @@ void setup() {
 }
 
 void loop() {
+  while(radio.available()) {
+    digitalWrite(greenLED, HIGH);
+  } else {
+    digitalWrite(greenLED, LOW);
+  }
   jDirectionL = analogRead(joystickL);  //reads the command given from the left joystick
   jDirectionR = analogRead(joystickR);  //reads the command given from the right joystick
-  //weaponButton(activateWeapon);           //reads the command from pressing the button
-  //killButton(activateKill);
   killButton = digitalRead(killPin);
   weaponButton = digitalRead(weaponPin);
 
