@@ -27,6 +27,7 @@ int joystickR = A2;       //where the joystickB is connected
 const int weaponPin = 2;  //choose one of the pins from 1 - 13 as long as it is not being used
                           //number of the pushbutton pin, weaponPin = Left Joystick Switch.
 const int killPin = 3;    //number of the pushbutton pin, killPin = Right Joystick Switch.
+const int greenLED = 5;
 
 //changing values
 int jDirectionL, jDirectionR;                  //records the direction of the joysticks that want the motors to
@@ -46,14 +47,16 @@ void setup() {
   pinMode(killPin, INPUT); //initializes the kill switch pin as an input
   digitalWrite(weaponPin, HIGH); //sets the weapon pin value to "on"
   digitalWrite(killPin, HIGH); //sets the kill switch pin value to "on"
+  pinMode(greenLED, OUTPUT);
 }
 
 void loop() {
   jDirectionL = analogRead(joystickL);  //reads the command given from the left joystick
   jDirectionR = analogRead(joystickR);  //reads the command given from the right joystick
-
-  killButton = digitalRead(killPin); //reads the command from pressing the button
-  weaponButton = digitalRead(weaponPin); //reads the command from pressing the button
+  //weaponButton(activateWeapon);           //reads the command from pressing the button
+  //killButton(activateKill);
+  killButton = digitalRead(killPin);
+  weaponButton = digitalRead(weaponPin);
 
   struct Data_Package{ //sets the package 
     int leftJoystick = jDirectionL;  //reads the command given from the left joystick
@@ -64,13 +67,13 @@ void loop() {
 
   Data_Package data; // Create a variable with the above structure
   radio.write(&data, sizeof(Data_Package));
-  Serial.print("left_Joystick: "); //Changing data testing output
+  Serial.print("a: ");
   Serial.print(data.leftJoystick);
-  Serial.print("right_Jotstick: "); //Changing data testing output
+  Serial.print(" b: ");
   Serial.print(data.rightJoystick);
-  Serial.print("kill_Button: ");  //Changing data testing output
+  Serial.print(" c: ");
   Serial.print(data.activateKill);
-  Serial.print("weapon_Button: ");//Changing data testing output
+  Serial.print(" d: ");
   Serial.println(data.activateWeapon);
   Serial.println(" ");
 }
