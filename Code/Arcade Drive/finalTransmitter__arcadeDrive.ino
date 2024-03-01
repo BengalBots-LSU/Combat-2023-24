@@ -48,14 +48,13 @@ void setup() {
   digitalWrite(weaponPin, HIGH); //sets the weapon pin value to "on"
   digitalWrite(killPin, HIGH); //sets the kill switch pin value to "on"
   pinMode(greenLED, OUTPUT);
+  digitalWrite(greenLED, LOW);
 }
 
 void loop() {
   while(radio.available()) {
     digitalWrite(greenLED, HIGH);
-  } else {
-    digitalWrite(greenLED, LOW);
-  }
+  } 
   jDirectionL = analogRead(joystickL);  //reads the command given from the left joystick
   jDirectionR = analogRead(joystickR);  //reads the command given from the right joystick
   killButton = digitalRead(killPin);
