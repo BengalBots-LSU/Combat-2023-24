@@ -87,9 +87,9 @@ void loop() {
     }
 
     moveBot(data.jDirectionL, data.jDirectionR);
- }
+  
 
-  /* testing to make sure the values are being collected accurately 
+  // testing to make sure the values are being collected accurately 
   Serial.print("a: ");
   Serial.print(data.jDirectionL);
   Serial.print(" b: ");
@@ -98,5 +98,6 @@ void loop() {
   Serial.print(data.killButton);
   Serial.print(" d: ");
   Serial.println(data.weaponButton);
-  Serial.println(" "); */
+  Serial.println(" "); 
+  }
 }
