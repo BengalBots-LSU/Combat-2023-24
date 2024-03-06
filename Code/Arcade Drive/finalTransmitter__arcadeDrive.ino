@@ -48,7 +48,7 @@ void setup() {
   digitalWrite(weaponPin, HIGH); //sets the weapon pin value to "on"
   digitalWrite(killPin, HIGH); //sets the kill switch pin value to "on"
   pinMode(greenLED, OUTPUT);
-  digitalWrite(greenLED, LOW);
+  digitalWrite(greenLED, LOW); // Turn off LED initially
 }
 
 void loop() {
@@ -67,6 +67,7 @@ void loop() {
     int activateWeapon = weaponButton;
   };
 
+  // Testing output 
   Data_Package data; // Create a variable with the above structure
   radio.write(&data, sizeof(Data_Package));
   Serial.print("a: ");
