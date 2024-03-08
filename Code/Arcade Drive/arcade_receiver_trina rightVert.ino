@@ -68,14 +68,14 @@ void loop() {
   }
 
   //obtain joystick values and convert them into the ranges 0 - 180
-  //left joystick is vertical, right is horizontal
+  //left joystick is horizontal, right is vertical
   int yAxis = mapJoystick(data.jDirectionL);
-  int xAxis = mapJoystick(data.jDirectionR);  
+  int xAxis = mapJoystick(data.jDirectionR);
   
   //turns the joystick values into left and right speeds
-  int rightSpeed = 180 - (yAxis + xAxis);
+  int rightSpeed = 180 - (xAxis + yAxis);
   rightSpeed = constrain(rightSpeed, 0, 180);
-  int leftSpeed = yAxis - xAxis;
+  int leftSpeed = xAxis - yAxis;
   leftSpeed = constrain(leftSpeed, 0 , 180);
 
   //give power to the motors from 0 (reverse) to 180 (forward)
