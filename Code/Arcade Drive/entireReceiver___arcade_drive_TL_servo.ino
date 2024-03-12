@@ -31,7 +31,7 @@ const int stickMidpoint_R = 502;
 const int buttonMax = 1023;
 
 //Changing Variables
-int leftJoystick[2] = {0, 0};
+//int leftJoystick[2] = {0, 0};
 
 Servo leftMotor, //saber motor controller
 rightMotor, //saber motor controller
@@ -51,23 +51,23 @@ Data_Package data; //Create a variable with the above structure
 void moveBot(int x, int y) 
 {
   
-  if (x > leftJoystick[0]) 
+  if (x > stickMidpoint_L) 
   { 
-    leftMotor.write(180)); 
-    if (y > 510)
+    leftMotor.write(x)); 
+    if (y > stickMidpoint_R)
     {
-        rightMotor.write(y == 511 ? 180 : 90);
+        rightMotor.write(y == stickMidpoint_R + 1 ? x : -x);
     }
   } 
-  else if (x == leftJoystick[0] && y > 510) 
+  else if (x == stickMidpoint_L && y > stickMidpoint_R) 
   { 
-    leftMotor.write(90);
-    rightMotor.write(y > 512 ? 90:180); 
+    leftMotor.write(stickMidpoint_L);
+    rightMotor.write(y > stickMidpoint_R + 1 ? -x : x); 
   } 
-  else if (x < leftJoystick[0] && y < 511) 
+  else if (x < stickMidpoint_L && y < stickMidpoint_R) 
   { 
-    leftMotor.write(90);  
-    rightMotor.write(90); 
+    leftMotor.write(stickMidpoint_L);  
+    rightMotor.write(stickMidpoint_R); 
   }
 }
 
@@ -83,8 +83,8 @@ void setup() {
   rightMotor.attach(rightMotorPin, 1000, 2000);
   leftMotor.attach(leftMotorPin, 1000, 2000);
   weaponMotor.attach(weaponMotorPin, 1000, 2000)
-  leftJoystick[0] = map(data.jDirectionR, 0, buttonMax, 0, 180);
-  leftJoystick[1] = map(data.jDirectionL, 0, buttonMax, 180, 0);
+  //leftJoystick[0] = map(data.jDirectionR, 0, buttonMax, 0, 180);
+  //leftJoystick[1] = map(data.jDirectionL, 0, buttonMax, 180, 0);
   /*pinMode(leftMotor, OUTPUT);
   pinMode(rightMotor, OUTPUT);
   pinMode(weaponMotor, OUTPUT);
