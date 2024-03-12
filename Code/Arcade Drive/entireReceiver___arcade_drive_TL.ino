@@ -47,7 +47,7 @@ void moveBot(int x, int y)
   if (x > leftJoystick[0]) 
   { 
     digitalWrite(leftMotor, HIGH); 
-    if (right > 510)
+    if (y > 510)
     {
         digitalWrite(rightMotor, (y == 511 ? LOW : HIGH));
     }
@@ -63,7 +63,6 @@ void moveBot(int x, int y)
     digitalWrite(rightMotor, LOW); 
   }
 }
-
 
 
 void setup() {
@@ -89,7 +88,7 @@ void loop() {
     {
        digitalWrite(weaponMotor, (data.weaponButton ? LOW : HIGH)); 
     }
-    //else if (data.killButton == true && data.weaponButton == true) 
+    //else if (data.weaponButton == true) 
     //{
     //    COMPLETE THIS IF AVAILABLE
     //}
