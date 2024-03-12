@@ -40,7 +40,8 @@
   -    D10, D11, D12, D13
   -    Power & Ground: ??
 - Motor Controller:
-  -    
+  -    Left Motor = 24, Right Motor = 25
+  -    Weapon Motor = 26
   
 ### Notes for motor controller 
 - It has been decided that we're only working with two motors for drive
