@@ -52,7 +52,7 @@ struct Data_Package {
 
 Data_Package data; //Create a variable with the above structure
 
-void moveBotPoint(int x, int y)
+void moveBotPoint(int &x, int &y)
 {
   int leftMotion = (x > 1500 ? x+y : x-y);
   int rightMotion = (x > 1500 ? x-y+500 : x+y-500);
@@ -60,7 +60,7 @@ void moveBotPoint(int x, int y)
   rightMotor.write(rightMotion);
 }
 
-void moveBotSweep(int x, int y) 
+void moveBotSweep(int &x, int &y) 
 {
   //turning scheme: robot turns based on an offset given by
   //the x axis. This offset is additive when the robot is below
