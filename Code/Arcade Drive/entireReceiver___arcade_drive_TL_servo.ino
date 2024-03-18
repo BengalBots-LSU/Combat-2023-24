@@ -134,7 +134,7 @@ void loop() {
     //}
     moveL = map(data.jDirectionL, 0, 1023, 1000, 2000)
     moveR = map(data.jDirectionR, 0, 1023, -250, 250)
-    toggleDir ? moveBotPoint(moveL, moveR) : moveBotSweep;(moveL, moveR);
+    toggleDir ? moveBotPoint(moveL, moveR) : moveBotSweep(moveL, moveR);
   
 
   // testing to make sure the values are being collected accurately 
