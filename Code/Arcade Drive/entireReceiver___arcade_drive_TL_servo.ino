@@ -29,6 +29,8 @@ const int greenLED = 5;
 const int stickMidpoint_L = 511;
 const int stickMidpoint_R = 502;
 const int buttonMax = 1023;
+const int speedMidPos = 1750;
+const int speedMidNeg = 1250;
 
 //Changing Variables
 //int leftJoystick[2] = {0, 0};
@@ -36,6 +38,7 @@ const int buttonMax = 1023;
 Servo leftMotor, //saber motor controller
 rightMotor, //saber motor controller
 weaponMotor; //talon motor controller
+bool toggleDir = false;
 //, rightJoystick = 0;
 
 // Max size of this struct is 32 bytes - NRF24L01 buffer limit
@@ -44,31 +47,55 @@ struct Data_Package {
   int jDirectionR = 0;  //reads the command given from the right joystick
   bool killButton = false;   //reads the command given from the killswitch
   bool weaponButton = false; //reads the command given from the weapon button
+  bool pointTurn = false; //reads the state of the toggle button between point and sweep turns
 };
 
 Data_Package data; //Create a variable with the above structure
 
-void moveBot(int x, int y) 
+void moveBotPoint(int x, int y)
 {
-  
-  if (x > stickMidpoint_L) 
-  { 
-    leftMotor.write(x)); 
-    if (y > stickMidpoint_R)
+  int leftMotion = (x > 1500 ? x+y : x-y);
+  int rightMotion = (x > 1500 ? x-y+500 : x+y-500);
+  leftMotor.write(leftMotion);
+  rightMotor.write(rightMotion);
+}
+
+void moveBotSweep(int x, int y) 
+{
+  //turning scheme: robot turns based on an offset given by
+  //the x axis. This offset is additive when the robot is below
+  //the halfway speed of and subtractive when above
+    int leftMotion = 0, rightMotion = 0;
+
+    if (x >= 1500) //robot is moving forwards
     {
-        rightMotor.write(y == stickMidpoint_R + 1 ? x : -x);
+      if (y < 0) //robot is turning left
+      {
+        leftMotion = x > speedMidPos ? x+y : x;
+        rightMotion = (x > speedMidPos ? x : x-y) - 500; 
+      }
+      else //robot is turning right
+      {
+        leftMotion = x > speedMidPos ? x : x+y;
+        rightMotion = (x > speedMidPos ? x-y : x) - 500;
+      }
     }
-  } 
-  else if (x == stickMidpoint_L && y > stickMidpoint_R) 
-  { 
-    leftMotor.write(stickMidpoint_L);
-    rightMotor.write(y > stickMidpoint_R + 1 ? -x : x); 
-  } 
-  else if (x < stickMidpoint_L && y < stickMidpoint_R) 
-  { 
-    leftMotor.write(stickMidpoint_L);  
-    rightMotor.write(stickMidpoint_R); 
-  }
+    else //robot is moving backwards
+    {
+      if (y < 0) //robot is turning left
+      {
+        leftMotion = x < speedMidNeg ? x-y : x;
+        rightMotion = (x < speedMidNeg ? x : x+y) + 500; 
+      }
+      else //robot is turning right
+      {
+        leftMotion = x < speedMidNeg ? x : x-y;
+        rightMotion = (x < speedMidNeg ? x+y : x) + 500;
+      }
+    }
+
+    leftMotor.write(leftMotion);
+    rightMotor.write(rightMotion);
 }
 
 
@@ -98,16 +125,16 @@ void loop() {
     radio.read(&data, sizeof(Data_Package)); // Read the whole data and store it into the 'data' structure
     pinMode(greenLED, HIGH);
 
-    if (data.killButton == false) 
-    {
-       weaponMotor.write(data.weaponButton ? 180 : 90); 
-    }
+    if (!data.killButton) {weaponMotor.write(data.weaponButton ? 2000 : 1500);}
+
+    if (data.pointTurn){toggleDir = !toggleDir}}
     //else if (data.weaponButton == true) 
     //{
     //    COMPLETE THIS IF AVAILABLE
     //}
-
-    moveBot(data.jDirectionL, data.jDirectionR);
+    moveL = map(data.jDirectionL, 0, 1023, 1000, 2000)
+    moveR = map(data.jDirectionR, 0, 1023, -250, 250)
+    toggleDir ? moveBotPoint(moveL, moveR) : moveBotSweep;(moveL, moveR);
   
 
   // testing to make sure the values are being collected accurately 
