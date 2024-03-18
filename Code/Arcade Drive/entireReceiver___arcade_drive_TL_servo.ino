@@ -110,7 +110,7 @@ void setup() {
    //sabertooth setup
   rightMotor.attach(rightMotorPin, 1000, 2000);
   leftMotor.attach(leftMotorPin, 1000, 2000);
-  weaponMotor.attach(weaponMotorPin, 1000, 2000)
+  weaponMotor.attach(weaponMotorPin, 1000, 2000);
   //leftJoystick[0] = map(data.jDirectionR, 0, buttonMax, 0, 180);
   //leftJoystick[1] = map(data.jDirectionL, 0, buttonMax, 180, 0);
   /*pinMode(leftMotor, OUTPUT);
