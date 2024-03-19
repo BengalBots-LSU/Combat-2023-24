@@ -165,8 +165,8 @@ void loop() {
     //{
     //    COMPLETE THIS IF AVAILABLE
     //}
-    moveL = map(data.jDirectionL, 0, 1023, 1000, 2000); //these could be constant volatiles
-    moveR = map(data.jDirectionR, 0, 1023, -250, 250); //these could be constant volatiles
+    moveL = map(data.jDirectionL, 0, 1024, 1000, 2000); //these could be constant volatiles
+    moveR = map(data.jDirectionR, 0, 1024, -250, 250); //these could be constant volatiles
     toggleDir ? moveBotPoint(moveL, moveR, outL, outR) : moveBotSweep(moveL, moveR, outL, outR);
     leftMotor.write(outL);
     rightMotor.write(outR);
