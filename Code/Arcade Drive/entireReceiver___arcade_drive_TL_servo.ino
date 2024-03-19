@@ -27,7 +27,7 @@ RF24 radio(7, 8); // CE, CSN
 
 //Constant variables 
 const byte address[6] = "00001";
-//const int kSwitch = 9; //kill switch 
+const int kSwitch = 9; //kill switch 
 const int leftMotorPin = 24;
 const int rightMotorPin = 25;
 const int weaponMotorPin = 26;
