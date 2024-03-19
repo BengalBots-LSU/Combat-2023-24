@@ -141,7 +141,7 @@ void setup() {
 
 void loop() {
   pinMode(greenLED, LOW);
-  while(radio.available()) {
+  while(radio.available() && leftMotor.attached() && rightMotor.attached() && weaponMotor.attached()) {
     radio.read(&data, sizeof(Data_Package)); // Read the whole data and store it into the 'data' structure
     pinMode(greenLED, HIGH);
 
@@ -159,7 +159,7 @@ void loop() {
     rightMotor.write(outR);
 
   // testing to make sure the values are being collected accurately 
-  Serial.print("a: ");
+  /* Serial.print("a: ");
   Serial.print(data.jDirectionL);
   Serial.print(" b: ");
   Serial.print(data.jDirectionR);
@@ -171,6 +171,6 @@ void loop() {
   Serial.print(moveL);
   Serial.print(" f: ");
   Serial.print(moveR);
-  Serial.println(" "); 
+  Serial.println(" "); */
   }
 }
