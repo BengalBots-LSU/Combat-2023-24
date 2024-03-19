@@ -8,6 +8,12 @@ Code References:
 - Parsing through data https://github.com/maureensanchez99/CaSGC-Internship-2022
 */
 
+/*
+3/18 Note:
+TL: Motor output M1 is at a constant 15V and does not respond to stick input.
+Motor output M2 behaves as expected. This side is good to go.
+*/
+
 //Libraries needed to use certain modules and functions to make this program work
 #include <SPI.h>       //used to start communication between Arduinos
 #include <nRF24L01.h>
@@ -44,8 +50,8 @@ bool toggleDir = false;
 
 // Max size of this struct is 32 bytes - NRF24L01 buffer limit
 struct Data_Package {
-  int jDirectionL = 1500;  //reads the command given from the left joystick
-  int jDirectionR = 1500;  //reads the command given from the right joystick
+  int jDirectionL = 0;  //reads the command given from the left joystick
+  int jDirectionR = 0;  //reads the command given from the right joystick
   bool killButton = false;   //reads the command given from the killswitch
   bool weaponButton = false; //reads the command given from the weapon button
   bool pointTurn = false; //reads the state of the toggle button between point and sweep turns
@@ -73,12 +79,17 @@ void moveBotSweep(int &x, int &y)
       if (y < 0) //robot is turning left
       {
         leftMotion = x > speedMidPos ? x+y : x;
-        rightMotion = x > speedMidPos ? x : x-y; 
+        rightMotion = (x > speedMidPos ? x : x-y); 
       }
       else if (y > 0)//robot is turning right
       {
         leftMotion = x > speedMidPos ? x : x+y;
-        rightMotion = x > speedMidPos ? x-y : x;
+        rightMotion = (x > speedMidPos ? x-y : x);
+      }
+      else
+      {
+        leftMotion = x;
+        rightMotion = x;
       }
     }
     else if (x < 1500)//robot is moving backwards
@@ -86,12 +97,17 @@ void moveBotSweep(int &x, int &y)
       if (y < 0) //robot is turning left
       {
         leftMotion = x < speedMidNeg ? x-y : x;
-        rightMotion = x < speedMidNeg ? x : x+y; 
+        rightMotion = (x < speedMidNeg ? x : x+y); 
       }
       else if (y > 0)//robot is turning right
       {
         leftMotion = x < speedMidNeg ? x : x-y;
-        rightMotion = x < speedMidNeg ? x+y : x;
+        rightMotion = (x < speedMidNeg ? x+y : x);
+      }
+      else
+      {
+        leftMotion = x;
+        rightMotion = x;
       }
     }
     else
@@ -141,10 +157,10 @@ void loop() {
     //{
     //    COMPLETE THIS IF AVAILABLE
     //}
-    moveL = map(data.jDirectionL, 0, 1023, 1000, 2000);
-    moveR = map(data.jDirectionR, 0, 1023, -250, 250);
+    moveL = map(data.jDirectionL, 0, 1023, 1000, 2000); //these could be constant volatiles
+    moveR = map(data.jDirectionR, 0, 1023, -250, 250); //these could be constant volatiles
     toggleDir ? moveBotPoint(moveL, moveR) : moveBotSweep(moveL, moveR);
-  
+    delay(20);
 
   // testing to make sure the values are being collected accurately 
   Serial.print("a: ");
@@ -155,6 +171,10 @@ void loop() {
   Serial.print(data.killButton);
   Serial.print(" d: ");
   Serial.println(data.weaponButton);
+  Serial.print(" e: ");
+  Serial.print(moveL);
+  Serial.print(" f: ");
+  Serial.print(moveR);
   Serial.println(" "); 
   }
 }
