@@ -35,8 +35,8 @@ const int greenLED = 5;
 const int stickMidpoint_L = 511;
 const int stickMidpoint_R = 502;
 const int buttonMax = 1023;
-const int speedMidPos = 1750;
-const int speedMidNeg = 1250;
+const int speedMidPos = 45;
+const int speedMidNeg = 135;
 
 //Changing Variables
 //int leftJoystick[2] = {0, 0};
@@ -63,19 +63,19 @@ void moveBotPoint(int &x, int &y, int &a, int &b)
 {
   //Turning scheme: Both sides of the robot get the
   //same offset in opposite directions. This way, the robot turns in place.
- if (x > 1505)
+ if (x > 95)
  {
    a = y < 0 ? x+y : x-y;
  }
-  else if (x < 1495)
+  else if (x < 85)
   {
     a = y > 0 ? x+y : x-y;
   }
   else
   {
-    a = 1500;
+    a = 90;
   }
-   b = map(a, 1000, 2000, 2000, 1000);
+   b = map(a, 0, 180, 180, 0);
 }
 
 void moveBotSweep(int &x, int &y, int &a, int &b) 
@@ -85,7 +85,7 @@ void moveBotSweep(int &x, int &y, int &a, int &b)
   //the halfway speed of and subtractive when above.
   //This way, the robot can move at its maximum speed.
 
-    if (x > 1505) //robot is moving forwards
+    if (x > 95) //robot is moving forwards
     {
       if (y < 0) //robot is turning left
       {
@@ -103,7 +103,7 @@ void moveBotSweep(int &x, int &y, int &a, int &b)
         b = x;
       }
     }
-    else if (x < 1495)//robot is moving backwards
+    else if (x < 85)//robot is moving backwards
     {
       if (y < 0) //robot is turning left
       {
@@ -123,8 +123,8 @@ void moveBotSweep(int &x, int &y, int &a, int &b)
     }
     else
     {
-      a = 1500;
-      b = 1500;
+      a = 90;
+      b = 90;
     }
 }
 
@@ -165,8 +165,8 @@ void loop() {
     //{
     //    COMPLETE THIS IF AVAILABLE
     //}
-    moveL = map(data.jDirectionL, 0, 1024, 1000, 2000); //these could be constant volatiles
-    moveR = map(data.jDirectionR, 0, 1024, -250, 250); //these could be constant volatiles
+    moveL = map(data.jDirectionL, 0, 1024, 0, 180); //these could be constant volatiles
+    moveR = map(data.jDirectionR, 0, 1024, -45, 45); //these could be constant volatiles
     toggleDir ? moveBotPoint(moveL, moveR, outL, outR) : moveBotSweep(moveL, moveR, outL, outR);
     leftMotor.write(outL);
     rightMotor.write(outR);
