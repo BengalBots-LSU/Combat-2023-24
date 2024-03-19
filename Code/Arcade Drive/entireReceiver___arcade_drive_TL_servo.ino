@@ -71,6 +71,10 @@ void moveBotPoint(int &x, int &y, int &a, int &b)
   {
     a = y > 0 ? x+y : x-y;
   }
+  else
+  {
+    a = 1500;
+  }
    b = map(a, 1000, 2000, 2000, 1000);
 }
 
