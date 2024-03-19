@@ -61,28 +61,37 @@ Data_Package data; //Create a variable with the above structure
 
 void moveBotPoint(int &x, int &y, int &a, int &b)
 {
-  a = (x > 1500 ? x+y : x == 1500 ? x : x-y);
-  b = (x > 1500 ? x-y : x == 1500 ? x :x+y);
+  //Turning scheme: Both sides of the robot get the
+  //same offset in opposite directions. This way, the robot turns in place.
+ if (x > 1505)
+ {
+   a = y < 0 ? x+y : x-y;
+ }
+  else if (x < 1495)
+  {
+    a = y > 0 ? x+y : x-y;
+  }
+   b = map(a, 1000, 2000, 2000, 1000);
 }
 
 void moveBotSweep(int &x, int &y, int &a, int &b) 
 {
-  //turning scheme: robot turns based on an offset given by
+  //Turning Scheme: robot turns based on an offset given by
   //the x axis. This offset is additive when the robot is below
-  //the halfway speed of and subtractive when above
-    int leftMotion = 1500, rightMotion = 1500;
+  //the halfway speed of and subtractive when above.
+  //This way, the robot can move at its maximum speed.
 
-    if (x > 1500) //robot is moving forwards
+    if (x > 1505) //robot is moving forwards
     {
       if (y < 0) //robot is turning left
       {
         a = x > speedMidPos ? x+y : x;
-        b = (x > speedMidPos ? x : x-y); 
+        b = x > speedMidPos ? x : x-y; 
       }
       else if (y > 0)//robot is turning right
       {
         a = x > speedMidPos ? x : x+y;
-        b = (x > speedMidPos ? x-y : x);
+        b = x > speedMidPos ? x-y : x;
       }
       else
       {
@@ -90,17 +99,17 @@ void moveBotSweep(int &x, int &y, int &a, int &b)
         b = x;
       }
     }
-    else if (x < 1500)//robot is moving backwards
+    else if (x < 1495)//robot is moving backwards
     {
       if (y < 0) //robot is turning left
       {
         a = x < speedMidNeg ? x-y : x;
-        b = (x < speedMidNeg ? x : x+y); 
+        b = x < speedMidNeg ? x : x+y; 
       }
       else if (y > 0)//robot is turning right
       {
         a = x < speedMidNeg ? x : x-y;
-        b = (x < speedMidNeg ? x+y : x);
+        b = x < speedMidNeg ? x+y : x;
       }
       else
       {
@@ -124,19 +133,19 @@ void setup() {
   radio.startListening();
 
    //sabertooth setup
+  //leftJoystick[0] = map(data.jDirectionR, 0, buttonMax, 0, 180);
+  //leftJoystick[1] = map(data.jDirectionL, 0, buttonMax, 180, 0);
+  pinMode(leftMotorPin, OUTPUT);
+  pinMode(rightMotorPin, OUTPUT);
+  pinMode(weaponMotorPin, OUTPUT);
+  pinMode(kSwitch, OUTPUT);
+  pinMode(greenLED, OUTPUT);
   rightMotor.attach(rightMotorPin, 1000, 2000);
   leftMotor.attach(leftMotorPin, 1000, 2000);
   weaponMotor.attach(weaponMotorPin, 1000, 2000);
   rightMotor.write(1500);
   leftMotor.write(1500);
   weaponMotor.write(1500);
-  //leftJoystick[0] = map(data.jDirectionR, 0, buttonMax, 0, 180);
-  //leftJoystick[1] = map(data.jDirectionL, 0, buttonMax, 180, 0);
-  /*pinMode(leftMotor, OUTPUT);
-  pinMode(rightMotor, OUTPUT);
-  pinMode(weaponMotor, OUTPUT);
-  pinMode(kSwitch, OUTPUT);
-  pinMode(greenLED, OUTPUT);*/
 }
 
 void loop() {
@@ -154,7 +163,7 @@ void loop() {
     //}
     moveL = map(data.jDirectionL, 0, 1023, 1000, 2000); //these could be constant volatiles
     moveR = map(data.jDirectionR, 0, 1023, -250, 250); //these could be constant volatiles
-    toggleDir ? moveBotPoint(moveL, moveR, outL, outR) : moveBotSweep(moveL, moveR, outL, ourR);
+    toggleDir ? moveBotPoint(moveL, moveR, outL, outR) : moveBotSweep(moveL, moveR, outL, outR);
     leftMotor.write(outL);
     rightMotor.write(outR);
 
