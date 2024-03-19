@@ -44,7 +44,7 @@ const int speedMidNeg = 1250;
 Servo leftMotor, //saber motor controller
 rightMotor, //saber motor controller
 weaponMotor; //talon motor controller
-int moveL = 0, moveR = 0;
+int moveL = 0, moveR = 0, outL = 1500, outR = 1500;
 bool toggleDir = false;
 //, rightJoystick = 0;
 
@@ -59,15 +59,13 @@ struct Data_Package {
 
 Data_Package data; //Create a variable with the above structure
 
-void moveBotPoint(int &x, int &y)
+void moveBotPoint(int &x, int &y, int &a, int &b)
 {
-  int leftMotion = (x > 1500 ? x+y : x == 1500 ? x : x-y);
-  int rightMotion = (x > 1500 ? x-y : x == 1500 ? x :x+y);
-  leftMotor.write(leftMotion);
-  rightMotor.write(rightMotion);
+  a = (x > 1500 ? x+y : x == 1500 ? x : x-y);
+  b = (x > 1500 ? x-y : x == 1500 ? x :x+y);
 }
 
-void moveBotSweep(int &x, int &y) 
+void moveBotSweep(int &x, int &y, int &a, int &b) 
 {
   //turning scheme: robot turns based on an offset given by
   //the x axis. This offset is additive when the robot is below
@@ -78,46 +76,43 @@ void moveBotSweep(int &x, int &y)
     {
       if (y < 0) //robot is turning left
       {
-        leftMotion = x > speedMidPos ? x+y : x;
-        rightMotion = (x > speedMidPos ? x : x-y); 
+        a = x > speedMidPos ? x+y : x;
+        b = (x > speedMidPos ? x : x-y); 
       }
       else if (y > 0)//robot is turning right
       {
-        leftMotion = x > speedMidPos ? x : x+y;
-        rightMotion = (x > speedMidPos ? x-y : x);
+        a = x > speedMidPos ? x : x+y;
+        b = (x > speedMidPos ? x-y : x);
       }
       else
       {
-        leftMotion = x;
-        rightMotion = x;
+        a = x;
+        b = x;
       }
     }
     else if (x < 1500)//robot is moving backwards
     {
       if (y < 0) //robot is turning left
       {
-        leftMotion = x < speedMidNeg ? x-y : x;
-        rightMotion = (x < speedMidNeg ? x : x+y); 
+        a = x < speedMidNeg ? x-y : x;
+        b = (x < speedMidNeg ? x : x+y); 
       }
       else if (y > 0)//robot is turning right
       {
-        leftMotion = x < speedMidNeg ? x : x-y;
-        rightMotion = (x < speedMidNeg ? x+y : x);
+        a = x < speedMidNeg ? x : x-y;
+        b = (x < speedMidNeg ? x+y : x);
       }
       else
       {
-        leftMotion = x;
-        rightMotion = x;
+        a = x;
+        b = x;
       }
     }
     else
     {
-      leftMotion = 1500;
-      rightMotion = 1500;
+      a = 1500;
+      b = 1500;
     }
-
-    leftMotor.write(leftMotion);
-    rightMotor.write(rightMotion);
 }
 
 
@@ -159,8 +154,9 @@ void loop() {
     //}
     moveL = map(data.jDirectionL, 0, 1023, 1000, 2000); //these could be constant volatiles
     moveR = map(data.jDirectionR, 0, 1023, -250, 250); //these could be constant volatiles
-    toggleDir ? moveBotPoint(moveL, moveR) : moveBotSweep(moveL, moveR);
-    delay(20);
+    toggleDir ? moveBotPoint(moveL, moveR, outL, outR) : moveBotSweep(moveL, moveR, outL, ourR);
+    leftMotor.write(outL);
+    rightMotor.write(outR);
 
   // testing to make sure the values are being collected accurately 
   Serial.print("a: ");
