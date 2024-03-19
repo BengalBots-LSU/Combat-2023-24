@@ -72,7 +72,7 @@ void moveBotSweep(int &x, int &y)
   //turning scheme: robot turns based on an offset given by
   //the x axis. This offset is additive when the robot is below
   //the halfway speed of and subtractive when above
-    int leftMotion = 0, rightMotion = 0;
+    int leftMotion = 1500, rightMotion = 1500;
 
     if (x > 1500) //robot is moving forwards
     {
