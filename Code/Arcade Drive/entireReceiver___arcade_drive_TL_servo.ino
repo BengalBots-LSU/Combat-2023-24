@@ -44,7 +44,7 @@ const int speedMidNeg = 135;
 Servo leftMotor, //saber motor controller
 rightMotor, //saber motor controller
 weaponMotor; //talon motor controller
-int moveL = 0, moveR = 0, outL = 1500, outR = 1500;
+int moveL = 0, moveR = 0, outL = 90, outR = 90;
 bool toggleDir = false;
 //, rightJoystick = 0;
 
