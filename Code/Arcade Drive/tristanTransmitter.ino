@@ -62,16 +62,18 @@ void setup() {
   digitalWrite(weaponPin, HIGH);
   digitalWrite(killPin, HIGH);
   
-  Data_Package data; // Create a variable with the Data_Package structure
 }
 
 void loop() {
+  Data_Package data; // Create a variable with the Data_Package structure
   data.leftJoystick = analogRead(joystickL);  //reads the command given from the left joystick
   data.rightJoystick = analogRead(joystickR);  //reads the command given from the right joystick
   //weaponButton(activateWeapon);           //reads the command from pressing the button
   //killButton(activateKill);
   data.activateKill = digitalRead(killPin);
   data.activateWeapon = digitalRead(weaponPin);
+  int moveL = map(data.leftJoystick, 0, 1023, 1000, 2000); //these could be constant volatiles
+  int moveR = map(data.rightJoystick, 0, 1023, -250, 250); //these could be constant volatiles
 
   radio.write(&data, sizeof(Data_Package));
   Serial.print("a: ");
@@ -82,6 +84,10 @@ void loop() {
   Serial.print(data.activateKill);
   Serial.print(" d: ");
   Serial.println(data.activateWeapon);
+  Serial.print(" e: ");
+  Serial.print(moveL);
+  Serial.print(" f: ");
+  Serial.print(moveR);
   Serial.println(" ");
 }
 
