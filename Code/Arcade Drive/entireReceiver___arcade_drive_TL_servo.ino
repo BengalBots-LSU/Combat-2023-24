@@ -61,8 +61,8 @@ Data_Package data; //Create a variable with the above structure
 
 void moveBotPoint(int &x, int &y)
 {
-  int leftMotion = (x > 1500 ? x+y : x-y);
-  int rightMotion = (x > 1500 ? x-y : x+y);
+  int leftMotion = (x > 1500 ? x+y : x == 1500 ? x : x-y);
+  int rightMotion = (x > 1500 ? x-y : x == 1500 ? x :x+y);
   leftMotor.write(leftMotion);
   rightMotor.write(rightMotion);
 }
