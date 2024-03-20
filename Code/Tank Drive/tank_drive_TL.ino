@@ -8,7 +8,7 @@ RF24 radio(7, 8); // CE, CSN
 
 //Constant variables
 const byte address[6] = "00001";
-const int leftMotorPin = 2, rightMotorPin = 3, weaponMotor = 4, kSwitch = 9, greenLED = 5;
+const int leftMotorPin = 24, rightMotorPin = 25, weaponMotor = 26, kSwitch = 9, greenLED = 5;
 //int leftJoystick = 513, rightJoystickA = 502, rightJoystickB = 503;
 //change
 int buttonMax = 1024;
