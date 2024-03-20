@@ -11,7 +11,7 @@ const byte address[6] = "00001";
 const int leftMotorPin = 2, rightMotorPin = 3, weaponMotor = 4, kSwitch = 9, greenLED = 5;
 //int leftJoystick = 513, rightJoystickA = 502, rightJoystickB = 503;
 //change
-int buttonMax = 1023;
+int buttonMax = 1024;
 Servo LM1, RM1;
 //see DIP switch wizard to configure the pins to the servos
 
