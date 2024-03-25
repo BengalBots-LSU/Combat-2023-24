@@ -37,10 +37,11 @@ bool killButton = false, weaponButton = false;           //reads the pushbutton 
 
 
 struct Data_Package{
-  int leftJoystick;  //reads the command given from the left joystick
-  int rightJoystick;  //reads the command given from the right joystick
-  bool activateKill;
-  bool activateWeapon;
+  int jDirectionL;  //reads the command given from the left joystick
+  int jDirectionR;  //reads the command given from the right joystick
+  bool killButton;
+  bool weaponButton;
+  bool pointTurn;
 };
 //TL: This struct was inside the loop function
 //The compiler knows to take this out but it doesn't
@@ -66,16 +67,17 @@ void setup() {
 
 void loop() {
   Data_Package data; // Create a variable with the Data_Package structure
-  data.leftJoystick = analogRead(joystickL);  //reads the command given from the left joystick
-  data.rightJoystick = analogRead(joystickR);  //reads the command given from the right joystick
+  data.jDirectionL = analogRead(joystickL);  //reads the command given from the left joystick
+  data.jDirectionR = analogRead(joystickR);  //reads the command given from the right joystick
   //weaponButton(activateWeapon);           //reads the command from pressing the button
   //killButton(activateKill);
-  data.activateKill = digitalRead(killPin);
-  data.activateWeapon = digitalRead(weaponPin);
-  int moveL = map(data.leftJoystick, 0, 1023, 1000, 2000); //these could be constant volatiles
-  int moveR = map(data.rightJoystick, 0, 1023, -250, 250); //these could be constant volatiles
+  data.killButton = digitalRead(killPin);
+  data.weaponButton = digitalRead(weaponPin);
+  data.pointTurn = false;
+  //int moveL = map(data.leftJoystick, 0, 1023, 1000, 2000); //these could be constant volatiles
+  //int moveR = map(data.rightJoystick, 0, 1023, -250, 250); //these could be constant volatiles
 
-  radio.write(&data, sizeof(Data_Package));
+  radio.write(&data, sizeof(data));
   Serial.print("a: ");
   Serial.print(data.leftJoystick);
   Serial.print(" b: ");
