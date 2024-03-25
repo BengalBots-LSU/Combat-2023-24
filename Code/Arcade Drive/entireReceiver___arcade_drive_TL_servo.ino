@@ -50,14 +50,12 @@ bool toggleDir = false;
 
 // Max size of this struct is 32 bytes - NRF24L01 buffer limit
 struct Data_Package {
-  int jDirectionL = 0;  //reads the command given from the left joystick
-  int jDirectionR = 0;  //reads the command given from the right joystick
-  bool killButton = false;   //reads the command given from the killswitch
-  bool weaponButton = false; //reads the command given from the weapon button
-  bool pointTurn = false; //reads the state of the toggle button between point and sweep turns
+  int jDirectionL;  //reads the command given from the left joystick
+  int jDirectionR;  //reads the command given from the right joystick
+  bool killButton;   //reads the command given from the killswitch
+  bool weaponButton; //reads the command given from the weapon button
+  bool pointTurn; //reads the state of the toggle button between point and sweep turns
 };
-
-Data_Package data; //Create a variable with the above structure
 
 void moveBotPoint(int &x, int &y, int &a, int &b)
 {
@@ -153,6 +151,7 @@ void setup() {
 }
 
 void loop() {
+  Data_Package data; //Create a variable with the above structure
   pinMode(greenLED, LOW);
   while(radio.available() && leftMotor.attached() && rightMotor.attached() && weaponMotor.attached()) {
     radio.read(&data, sizeof(Data_Package)); // Read the whole data and store it into the 'data' structure
