@@ -148,13 +148,13 @@ void setup() {
   rightMotor.write(90);
   leftMotor.write(90);
   weaponMotor.write(90);
+  Data_Package data; //Create a variable with the above structure
 }
 
 void loop() {
-  Data_Package data; //Create a variable with the above structure
   pinMode(greenLED, LOW);
   while(radio.available() && leftMotor.attached() && rightMotor.attached() && weaponMotor.attached()) {
-    radio.read(&data, sizeof(Data_Package)); // Read the whole data and store it into the 'data' structure
+    radio.read(&data, sizeof(data)); // Read the whole data and store it into the 'data' structure
     pinMode(greenLED, HIGH);
 
     if (!data.killButton) {weaponMotor.write(data.weaponButton ? 2000 : 1500);}
