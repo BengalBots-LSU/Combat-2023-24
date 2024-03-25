@@ -79,18 +79,13 @@ void loop() {
 
   radio.write(&data, sizeof(data));
   Serial.print("a: ");
-  Serial.print(data.leftJoystick);
+  Serial.print(data.jDirctionL);
   Serial.print(" b: ");
-  Serial.print(data.rightJoystick);
+  Serial.print(data.jDirectionR);
   Serial.print(" c: ");
-  Serial.print(data.activateKill);
+  Serial.print(data.killButton);
   Serial.print(" d: ");
-  Serial.println(data.activateWeapon);
-  Serial.print(" e: ");
-  Serial.print(moveL);
-  Serial.print(" f: ");
-  Serial.print(moveR);
-  Serial.println(" ");
+  Serial.println(data.weaponButton);
 }
 
 //TL: This saves 8 load-store instructions per iteration of loop(),
