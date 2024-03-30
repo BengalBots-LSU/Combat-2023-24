@@ -54,7 +54,6 @@ struct Data_Package {
   int jDirectionR;  //reads the command given from the right joystick
   bool killButton;   //reads the command given from the killswitch
   bool weaponButton; //reads the command given from the weapon button
-  bool pointTurn; //reads the state of the toggle button between point and sweep turns
 };
 
 Data_Package data; //Create a variable with the above structure
@@ -77,7 +76,6 @@ void setup() {
   rightMotor.write(1500);
   leftMotor.write(1500);
   weaponMotor.write(1500);
-
 }
 
 void loop() {
@@ -89,6 +87,7 @@ void loop() {
     //{
     //    COMPLETE THIS IF AVAILABLE
     //}
+    
     moveL = map(data.jDirectionL, 0, 1024, 1000, 2000); //these could be constant volatiles
     moveR = map(data.jDirectionR, 0, 1024, 1000, 2000); //these could be constant volatiles
     leftMotor.write(moveL);
