@@ -28,7 +28,7 @@ RF24 radio(7, 8); // CE, CSN
 //Constant variables 
 const byte address[6] = "00001";
 const int kSwitch = 9; //kill switch 
-const int leftMotorPin = 4;
+const int leftMotorPin = 3;
 const int rightMotorPin = 13;
 const int weaponMotorPin = 2;
 const int greenLED = 5;
@@ -61,19 +61,19 @@ void moveBotPoint(int &x, int &y, int &a, int &b)
 {
   //Turning scheme: Both sides of the robot get the
   //same offset in opposite directions. This way, the robot turns in place.
- if (x > 95)
+ if (x > 1495)
  {
    a = y < 0 ? x+y : x-y;
  }
-  else if (x < 85)
+  else if (x < 1505)
   {
     a = y > 0 ? x+y : x-y;
   }
   else
   {
-    a = 90;
+    a = 1500;
   }
-   b = map(a, 0, 180, 180, 0);
+   b = map(a, 0, 2000, 2000, 0);
 }
 
 void moveBotSweep(int &x, int &y, int &a, int &b) 
@@ -83,7 +83,7 @@ void moveBotSweep(int &x, int &y, int &a, int &b)
   //the halfway speed of and subtractive when above.
   //This way, the robot can move at its maximum speed.
 
-    if (x > 95) //robot is moving forwards
+    if (x > 1505) //robot is moving forwards
     {
       if (y < 0) //robot is turning left
       {
@@ -101,7 +101,7 @@ void moveBotSweep(int &x, int &y, int &a, int &b)
         b = x;
       }
     }
-    else if (x < 85)//robot is moving backwards
+    else if (x < 1495)//robot is moving backwards
     {
       if (y < 0) //robot is turning left
       {
@@ -121,8 +121,8 @@ void moveBotSweep(int &x, int &y, int &a, int &b)
     }
     else
     {
-      a = 90;
-      b = 90;
+      a = 1500;
+      b = 1500;
     }
 }
 
@@ -164,8 +164,8 @@ void loop() {
     //{
     //    COMPLETE THIS IF AVAILABLE
     //}
-    moveL = map(data.jDirectionL, 0, 1024, 0, 180); //these could be constant volatiles
-    moveR = map(data.jDirectionR, 0, 1024, -45, 45); //these could be constant volatiles
+    moveL = map(data.jDirectionL, 0, 1024, 1000, 2000); //these could be constant volatiles
+    moveR = map(data.jDirectionR, 0, 1024, -500, 500); //these could be constant volatiles
     toggleDir ? moveBotPoint(moveL, moveR, outL, outR) : moveBotSweep(moveL, moveR, outL, outR);
     leftMotor.write(outL);
     rightMotor.write(outR);
