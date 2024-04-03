@@ -145,9 +145,9 @@ void setup() {
   rightMotor.attach(rightMotorPin, 1000, 2000);
   leftMotor.attach(leftMotorPin, 1000, 2000);
   weaponMotor.attach(weaponMotorPin, 1000, 2000);
-  rightMotor.write(90);
-  leftMotor.write(90);
-  weaponMotor.write(90);
+  rightMotor.write(1500);
+  leftMotor.write(1500);
+  weaponMotor.write(1500);
   Data_Package data; //Create a variable with the above structure
 }
 
