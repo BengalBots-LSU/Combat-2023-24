@@ -23,8 +23,11 @@ const byte address[6] = "00001";
 const int joystickL = A1, //where the left joystick is connected
           joystickR = A2, //where the joystickB is connected
                           //choose one of the pins from 1 - 13 as long as it is not being used
-          weaponPin = 2;  //number of the pushbutton pin, weaponPin = Left Joystick Switch.
+          weaponPin = 2,  //number of the pushbutton pin, weaponPin = Left Joystick Switch.
           //killPin = 3;    //number of the pushbutton pin, killPin = Right Joystick Switch.
+          red = 5, //controller is powered
+          yellow = 6, //kill switch activated 
+          green = 9; //active communication with receiver
 
 //changing variables
 int jDirectionL, jDirectionR;                  //records the direction of the joysticks that want the motors to
@@ -52,7 +55,7 @@ void setup() {
   Serial.begin(115200);
   radio.begin();
   radio.openWritingPipe(address);
-  radio.setPALevel(RF24_PA_MIN);
+  radio.setPALevel(RF24_PA_HIGH);
   radio.stopListening();
  
   pinMode(weaponPin, INPUT);  //initializes the weapon pin as an input
