@@ -62,6 +62,9 @@ void setup() {
   //pinMode(killPin, INPUT);
   digitalWrite(weaponPin, HIGH);
   //digitalWrite(killPin, HIGH);
+pinMode(red, HIGH);
+pinMode(yellow, HIGH);
+pinMode(green, HIGH);
 }
 
 void loop() {
