@@ -90,6 +90,8 @@ void loop() {
     //}
     moveL = map(data.jDirectionL, 0, 1024, 1000, 2000); //these could be constant volatiles
     moveR = map(data.jDirectionR, 0, 1024, 1000, 2000); //these could be constant volatiles
+    if (data.killButton == 1) {moveL == 1500; moveR == 1500; digitalWrite(yellowLED, HIGH); digitalWrite(greenLED, LOW);}
+    else {digitalWrite(yellowLED, LOW); digitalWrite(greenLED, HIGH);}
     leftMotor.write(moveL);
     rightMotor.write(moveR);
 
