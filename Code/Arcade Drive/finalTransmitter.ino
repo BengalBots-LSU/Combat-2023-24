@@ -69,9 +69,10 @@ pinMode(green, OUTPUT);
 
 void loop() {
   Data_Package data; // Create a variable with the Data_Package structure
+  analogWrite(red, 64);
   data.leftJoystick = analogRead(joystickL);  //reads the command given from the left joystick
   data.rightJoystick = analogRead(joystickR);  //reads the command given from the right joystick
-analogWrite(red, 64);
+  data.activateKill = digitalRead(killPin);
 if(data.activateKill){
     analogWrite(yellow, 64);
     analogWrite(green, 0);
