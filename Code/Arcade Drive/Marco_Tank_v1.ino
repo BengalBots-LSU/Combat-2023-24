@@ -27,11 +27,11 @@ RF24 radio(7, 8); // CE, CSN
 
 //Constant variables 
 const byte address[6] = "00001";
-const int kSwitch = 9; //kill switch 
 const int leftMotorPin = 3;
 const int rightMotorPin = 13;
 const int weaponMotorPin = 2;
 const int greenLED = 5;
+const int yellowLED = 6;
 const int stickMidpoint_L = 511;
 const int stickMidpoint_R = 502;
 const int buttonMax = 1023;
@@ -54,31 +54,32 @@ struct Data_Package {
   int jDirectionR;  //reads the command given from the right joystick
   bool killButton;   //reads the command given from the killswitch
   bool weaponButton; //reads the command given from the weapon button
+  bool pointTurn; //reads the state of the toggle button between point and sweep turns
 };
-
-Data_Package data; //Create a variable with the above structure
 
 void setup() {
   Serial.begin(115200);  // boots serial monitor at ? bps
   radio.begin();
   radio.openReadingPipe(0, address);
-  radio.setPALevel(RF24_PA_MIN);
+  radio.setPALevel(RF24_PA_HIGH);
   radio.startListening();
 
   pinMode(leftMotorPin, OUTPUT);
   pinMode(rightMotorPin, OUTPUT);
   pinMode(weaponMotorPin, OUTPUT);
-  pinMode(kSwitch, OUTPUT);
   pinMode(greenLED, OUTPUT);
+  pinMode(yellowLED, OUTPUT);
   rightMotor.attach(rightMotorPin, 1000, 2000);
   leftMotor.attach(leftMotorPin, 1000, 2000);
   weaponMotor.attach(weaponMotorPin, 1000, 2000);
   rightMotor.write(1500);
   leftMotor.write(1500);
   weaponMotor.write(1500);
+  Data_Package data; //Create a variable with the above structure
 }
 
 void loop() {
+  pinMode(greenLED, LOW);
   while(radio.available()) {
     radio.read(&data, sizeof(data)); // Read the whole data and store it into the 'data' structure
     pinMode(greenLED, HIGH);
@@ -87,12 +88,11 @@ void loop() {
     //{
     //    COMPLETE THIS IF AVAILABLE
     //}
-    
     moveL = map(data.jDirectionL, 0, 1024, 1000, 2000); //these could be constant volatiles
     moveR = map(data.jDirectionR, 0, 1024, 1000, 2000); //these could be constant volatiles
     leftMotor.write(moveL);
     rightMotor.write(moveR);
-    //weaponMotor.write(input method tbd);
+
   // testing to make sure the values are being collected accurately 
   Serial.print("a: ");
   Serial.print(data.jDirectionL);
