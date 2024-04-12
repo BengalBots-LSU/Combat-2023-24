@@ -55,7 +55,7 @@ void setup() {
   Serial.begin(115200);
   radio.begin();
   radio.openWritingPipe(address);
-  radio.setPALevel(RF24_PA_MIN);
+  radio.setPALevel(RF24_PA_HIGH);
   radio.stopListening();
  
   pinMode(weaponPin, INPUT);  //initializes the weapon pin as an input
