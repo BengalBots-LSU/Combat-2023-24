@@ -71,8 +71,14 @@ void loop() {
   Data_Package data; // Create a variable with the Data_Package structure
   data.leftJoystick = analogRead(joystickL);  //reads the command given from the left joystick
   data.rightJoystick = analogRead(joystickR);  //reads the command given from the right joystick
+digitalWrite(red, HIGH);
+ if(killButton == true){
   //killButton(activateKill);
   //data.activateKill = digitalRead(killPin);
+  //digitalWrite(yellow, HIGH);
+  //digitalWrite(green, LOW);
+            
+ }
   data.activateWeapon = digitalRead(weaponPin);
   //int moveL = map(data.leftJoystick, 0, 1023, 1000, 2000); //these could be constant volatiles
   //int moveR = map(data.rightJoystick, 0, 1023, -250, 250); //these could be constant volatiles
